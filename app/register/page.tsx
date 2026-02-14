@@ -5,25 +5,40 @@ import { useState } from "react";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [name, setName] = useState("");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isServiceProvider, setIsServiceProvider] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        isServiceProvider,
+      }),
     });
+
+    const data = await res.json();
 
     if (res.ok) {
       router.push("/login");
     } else {
-      alert("Registration failed");
+      setError(data.message || "Registration failed");
     }
   };
 
@@ -35,12 +50,34 @@ export default function RegisterPage() {
       >
         <h2 className="text-2xl font-bold text-center">Register</h2>
 
+        {error && (
+          <p className="text-red-500 text-sm text-center">{error}</p>
+        )}
+
         <input
           type="text"
-          placeholder="Name"
+          placeholder="First Name"
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Last Name"
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Username"
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
 
@@ -61,6 +98,15 @@ export default function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
+        <label className="flex items-center space-x-2 text-sm">
+          <input
+            type="checkbox"
+            checked={isServiceProvider}
+            onChange={(e) => setIsServiceProvider(e.target.checked)}
+          />
+          <span>Register as Service Provider</span>
+        </label>
 
         <button
           type="submit"

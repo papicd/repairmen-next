@@ -6,19 +6,34 @@ export async function POST(req: Request) {
   try {
     await connectDB();
 
-    const { name, email, password } = await req.json();
+    const {
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+      isServiceProvider,
+    } = await req.json();
 
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !email || !username || !password) {
       return Response.json(
-        { message: "All fields are required" },
+        { message: "All required fields must be filled" },
         { status: 400 }
       );
     }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
       return Response.json(
-        { message: "User already exists" },
+        { message: "Email already in use" },
+        { status: 400 }
+      );
+    }
+
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return Response.json(
+        { message: "Username already taken" },
         { status: 400 }
       );
     }
@@ -26,9 +41,12 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name,
+      firstName,
+      lastName,
       email,
+      username,
       password: hashedPassword,
+      isServiceProvider: isServiceProvider ?? false,
     });
 
     return Response.json(
@@ -36,6 +54,8 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
+    console.error(error);
+
     return Response.json(
       { message: "Server error" },
       { status: 500 }
