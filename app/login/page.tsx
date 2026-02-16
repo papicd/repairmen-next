@@ -2,15 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuth } from '@/app/context/AuthContext';
 
 export default function LoginPage() {
+  const { refreshUser } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
-    console.log("SUBMIT TRIGGERED");
-
     e.preventDefault();
 
     const res = await fetch("/api/auth/login", {
@@ -22,7 +22,7 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      console.log('ide na home')
+      await refreshUser();
       router.push("/"); // ✅ redirect to home
     } else {
       alert("Invalid credentials");

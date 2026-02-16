@@ -136,4 +136,21 @@
     color: white;
     text-decoration: none;
   }
+
+  &__logout-container{
+    display: flex;
+    gap: 8px;
+  }
+
+  &__user-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: 700;
+  }
 }
