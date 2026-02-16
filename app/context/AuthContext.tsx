@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { UserService, CurrentUser } from "@/app/services/user.service";
+import { UserService, CurrentUser } from "@/app/app-services/user.service";
 
 interface AuthContextType {
   user: CurrentUser | null;

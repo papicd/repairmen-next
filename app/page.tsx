@@ -6,7 +6,6 @@ export default async function HomePage() {
   const token = cookieStore.get("token")?.value;
 
   const isLoggedIn = !!token;
-  console.log(isLoggedIn);
 
   return (
     <div className="p-10">
