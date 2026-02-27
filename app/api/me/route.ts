@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import jwt from "jsonwebtoken";
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   try {

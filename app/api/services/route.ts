@@ -4,12 +4,39 @@ import { connectDB } from '@/lib/mongodb';
 import Service from '@/models/Service';
 import { NextRequest, NextResponse } from 'next/server';
 
+// Middleware to verify authentication
+async function verifyAuth() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  
+  if (!token) {
+    return null;
+  }
+  
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET as string
+    ) as { userId: string };
+    return decoded;
+  } catch {
+    return null;
+  }
+}
+
 export async function GET() {
+  const auth = await verifyAuth();
+  
+  if (!auth) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
   try {
     await connectDB();
 
     const services = await Service.find().populate("owner", "username email");
-    console.log(services);
     return NextResponse.json({ services });
 
   } catch (error) {

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
     if (!user) {
       return Response.json(
-        { message: "Invalid email" },
+        { message: "Invalid email or password" },
         { status: 400 }
       );
     }
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     if (!isMatch) {
       return Response.json(
-        { message: "Invalid password" },
+        { message: "Invalid email or password" },
         { status: 400 }
       );
     }
