@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Table, { TableColumn } from '@/app/components/ui/Table';
+import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 interface User {
   _id: string;
@@ -12,8 +15,39 @@ interface User {
 }
 
 export default function UsersPage() {
+  const { t, locale } = useLanguage();
+  const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const usersColumns: TableColumn<User>[] = [
+
+    {
+      key: "firstName",
+      label: t("firstName"),
+      sortable: true,
+    },
+    {
+      key: "lastName",
+      label: t("lastName"),
+      sortable: true
+    },
+    {
+      key: "email",
+      label: t("email"),
+    },
+    {
+      key: "username",
+      label: t("username"),
+    },
+    {
+      key: "isServiceProvider",
+      label: t("provideServices"),
+      render: (row) => {
+        return (<span>{row.isServiceProvider ? t('yes'): t('no')}</span>)
+      }
+    },
+  ];
+
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -34,37 +68,9 @@ export default function UsersPage() {
   if (loading) return <p className="p-10">Loading users...</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <h1 className="text-3xl font-bold mb-6">Users</h1>
-
-      <div className="bg-white shadow rounded-lg p-6">
-        {users.length === 0 ? (
-          <p>No users found.</p>
-        ) : (
-          <ul className="space-y-4">
-            {users.map((user) => (
-              <li
-                key={user._id}
-                className="border p-4 rounded flex justify-between items-center"
-              >
-                <div>
-                  <p className="font-semibold">
-                    {user.firstName} {user.lastName}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user.email} | @{user.username}
-                  </p>
-                </div>
-
-                {user.isServiceProvider && (
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
-                    Service Provider
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+    <div className="min-h-screen bg-gray-50 p-10">
+      <div className="max-w-6xl mx-auto space-y-10">
+        <Table columns={usersColumns} data={users} onRowClick={(row) => router.push(`/users/${row._id}`)} getRowKey={(row) => row._id} />
       </div>
     </div>
   );

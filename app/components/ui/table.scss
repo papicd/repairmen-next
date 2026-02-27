@@ -100,3 +100,12 @@
     color: #b91c1c;
   }
 }
+
+.table__row--clickable {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.table__row--clickable:hover {
+  background-color: #f3f4f6; // light gray
+}

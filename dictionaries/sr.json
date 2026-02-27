@@ -1,0 +1,22 @@
+{
+  "home": "Početna",
+  "services": "Usluge",
+  "users": "Korisnici",
+  "contact": "Kontakt",
+  "login": "Prijava",
+  "register": "Registracija",
+  "logout": "Odjava",
+  "firstName": "Ime",
+  "lastName": "Prezime",
+  "email": "Email",
+  "username": "Korisničko ime",
+  "provideServices": "Ponuđаč usluga",
+  "yes": "Da",
+  "no": "Ne",
+  "serviceName": "Naziv usluge",
+  "description": "Opis",
+  "owner": "Ponuđač",
+  "date": "Datum",
+  "price": "Cijena",
+  "": ""
+}

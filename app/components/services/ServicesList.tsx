@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Table from '@/app/components/ui/Table';
+import Table, { TableColumn } from '@/app/components/ui/Table';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 interface Service {
   _id: string;
@@ -12,31 +13,24 @@ interface Service {
   owner: any;
 }
 
-type TableColumn<T> = {
-  key: keyof T;
-  label: string;
-  align?: "left" | "center" | "right";
-  width?: string;
-  sortable?: boolean;
-  render?: (row: T) => React.ReactNode;
-};
 
 export default function ServicesList() {
+  const { t, locale } = useLanguage();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const servicesColumns: TableColumn<Service>[] = [
     {
       key: "name",
-      label: "Service Name",
+      label: t("serviceName"),
       sortable: true,
     },
     {
       key: "description",
-      label: "Description",
+      label: t("description"),
     },
     {
       key: "owner",
-      label: "Owner",
+      label: t("owner"),
       render: (row) => (
         <span
           className="table__link"
@@ -48,7 +42,7 @@ export default function ServicesList() {
     },
     {
       key: "date",
-      label: "Date",
+      label: t("date"),
       render: (row) =>
         row?.date
           ? new Date(row.date).toLocaleDateString()
@@ -56,7 +50,7 @@ export default function ServicesList() {
     },
     {
       key: "price",
-      label: "Price",
+      label: t("price"),
       align: "right",
       render: (row) =>
         row.price ? `$${row.price}` : "-",

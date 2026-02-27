@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { use, useState } from 'react';
+import { useState } from "react";
 import "./navbar.scss";
-import { useAuth } from '@/app/context/AuthContext';
-import LogoutButton from '@/app/components/LogoutButton';
+import { useAuth } from "@/app/context/AuthContext";
+import LogoutButton from "@/app/components/LogoutButton";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function Navbar() {
-  const router = useRouter()
+  const { t, locale, changeLanguage } = useLanguage();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   return (
     <nav className="navbar">
@@ -24,36 +26,57 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div className="navbar__links">
           <Link href="/home" className="navbar__link">
-            Home
+            {t("home")}
           </Link>
+
           <Link href="/services" className="navbar__link">
-            Services
+            {t("services")}
           </Link>
-          {user && <Link href="/users" className="navbar__link">
-            Users
-          </Link>}
+
+          {user && (
+            <Link href="/users" className="navbar__link">
+              {t("users")}
+            </Link>
+          )}
+
           <Link href="/contact" className="navbar__link">
-            Contact
+            {t("contact")}
           </Link>
         </div>
 
-        {/* Desktop Auth Buttons */}
-        {!user ? (<div className="navbar__auth">
-          <Link href="/login" className="navbar__btn navbar__btn--outline">
-            Login
-          </Link>
-          <Link href="/register" className="navbar__btn navbar__btn--primary">
-            Register
-          </Link>
-            {
-              user && <div className="navbar__user-icon"></div>
-            }
-        </div>) :
-          (<div className="navbar__logout-container"> <LogoutButton /> {
-            user && <div className="navbar__user-icon" onClick={() => router.push("/profile")}>
-              {user?.firstName?.substring(0,1)}</div>
-          }</div>)}
+        {/* Desktop Right Side */}
+        <div className="navbar__right">
 
+          {/* 🌍 Language Switch */}
+          <button
+            className="navbar__lang"
+            onClick={() => changeLanguage(locale === "en" ? "sr" : "en")}
+          >
+            {locale === "en" ? "SR" : "EN"}
+          </button>
+
+          {/* Auth Section */}
+          {!user ? (
+            <div className="navbar__auth">
+              <Link href="/login" className="navbar__btn navbar__btn--outline">
+                {t("login")}
+              </Link>
+              <Link href="/register" className="navbar__btn navbar__btn--primary">
+                {t("register")}
+              </Link>
+            </div>
+          ) : (
+            <div className="navbar__logout-container">
+              <LogoutButton />
+              <div
+                className="navbar__user-icon"
+                onClick={() => router.push("/profile")}
+              >
+                {user?.firstName?.substring(0, 1)}
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Mobile Toggle */}
         <button
@@ -69,27 +92,30 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div className={`navbar__mobile ${isOpen ? "active" : ""}`}>
         <Link href="/home" className="navbar__mobile-link">
-          Home
+          {t("home")}
         </Link>
+
         <Link href="/services" className="navbar__mobile-link">
-          Services
+          {t("services")}
         </Link>
-        {user && <Link href="/users" className="navbar__mobile-link">
-          Users
-        </Link>}
+
+        {user && (
+          <Link href="/users" className="navbar__mobile-link">
+            {t("users")}
+          </Link>
+        )}
 
         <Link href="/contact" className="navbar__mobile-link">
-          Contact
+          {t("contact")}
         </Link>
 
-        <div className="navbar__mobile-auth">
-          <Link href="/login" className="navbar__mobile-btn">
-            Login
-          </Link>
-          <Link href="/register" className="navbar__mobile-btn">
-            Register
-          </Link>
-        </div>
+        {/* 🌍 Mobile Language Switch */}
+        <button
+          className="navbar__mobile-btn"
+          onClick={() => changeLanguage(locale === "en" ? "sr" : "en")}
+        >
+          {locale === "en" ? "Switch to Serbian" : "Prebaci na engleski"}
+        </button>
       </div>
     </nav>
   );
