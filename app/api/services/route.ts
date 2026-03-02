@@ -66,12 +66,13 @@ export async function POST(req: NextRequest) {
     ) as { userId: string };
 
     const body = await req.json();
-    const { name, description, price } = body;
+    const { name, description, price, date } = body;
 
     const newService = await Service.create({
       name,
       description,
       price,
+      date,
       owner: decoded.userId,
     });
 

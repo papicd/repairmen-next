@@ -33,9 +33,19 @@ export default function Navbar() {
             {t("services")}
           </Link>
 
+          <Link href="/service-requests" className="navbar__link">
+            {t("serviceRequests")}
+          </Link>
+
           {user && (
             <Link href="/users" className="navbar__link">
               {t("users")}
+            </Link>
+          )}
+
+          {user && user.isAdmin && (
+            <Link href="/admin" className="navbar__link">
+              {t("admin")}
             </Link>
           )}
 
@@ -99,9 +109,19 @@ export default function Navbar() {
           {t("services")}
         </Link>
 
+        <Link href="/service-requests" className="navbar__link">
+          {t("serviceRequests")}
+        </Link>
+
         {user && (
           <Link href="/users" className="navbar__mobile-link">
             {t("users")}
+          </Link>
+        )}
+
+        {user && user.isAdmin && (
+          <Link href="/admin" className="navbar__mobile-link">
+            {t("admin")}
           </Link>
         )}
 

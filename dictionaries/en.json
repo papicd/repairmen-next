@@ -6,5 +6,21 @@
   "login": "Login",
   "register": "Sign up",
   "logout": "Logout",
-  "": ""
+  "noServices": "No services available",
+  "admin": "Admin",
+  "adminDashboard": "Admin Dashboard",
+  "addNewPlace": "Add New Place",
+  "addNewServiceType": "Add New Service Type",
+  "country": "Country",
+  "place": "Place",
+  "currency": "Currency",
+  "serviceType": "Service Type",
+  "countryAndPlaceRequired": "Country and place are required",
+  "typeRequired": "Type is required",
+  "placeCreated": "Place created successfully!",
+  "serviceTypeCreated": "Service type created successfully!",
+  "createPlace": "Create Place",
+  "createServiceType": "Create Service Type",
+  "creating": "Creating...",
+  "loading": "Loading..."
 }

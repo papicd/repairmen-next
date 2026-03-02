@@ -1,8 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Table, { TableColumn } from '@/app/components/ui/Table';
-import { useLanguage } from '@/app/context/LanguageContext';
+import { useLanguage } from "@/app/context/LanguageContext";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+  CardBadge,
+  CardAvatar,
+  CardDate,
+} from "@/app/components/ui/Card";
+
+interface Owner {
+  _id: string;
+  username: string;
+  email: string;
+}
 
 interface Service {
   _id: string;
@@ -10,58 +25,13 @@ interface Service {
   description: string;
   price?: number;
   date?: string;
-  owner: any;
+  owner: Owner;
 }
 
-
 export default function ServicesList() {
-  const { t, locale } = useLanguage();
+  const { t } = useLanguage();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
-  const servicesColumns: TableColumn<Service>[] = [
-    {
-      key: "name",
-      label: t("serviceName"),
-      sortable: true,
-    },
-    {
-      key: "description",
-      label: t("description"),
-    },
-    {
-      key: "owner",
-      label: t("owner"),
-      render: (row) => (
-        <span
-          className="table__link"
-          onClick={() => handleOwnerClick(row.owner)}
-        >
-        {row?.owner?.username}
-      </span>
-      ),
-    },
-    {
-      key: "date",
-      label: t("date"),
-      render: (row) =>
-        row?.date
-          ? new Date(row.date).toLocaleDateString()
-          : "-",
-    },
-    {
-      key: "price",
-      label: t("price"),
-      align: "right",
-      render: (row) =>
-        row.price ? `$${row.price}` : "-",
-    },
-  ];
-
-  const handleOwnerClick = (owner: Owner) => {
-    //TODO handle click later
-    console.log("Owner clicked:", owner);
-  };
-
 
   const fetchServices = async () => {
     try {
@@ -79,11 +49,58 @@ export default function ServicesList() {
     fetchServices();
   }, []);
 
-  if (loading) return <div>Loading services...</div>;
+  const handleOwnerClick = (owner: Owner) => {
+    console.log("Owner clicked:", owner);
+  };
+
+  if (loading) {
+    return (
+      <div className="card-grid card-grid--loading">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
+
+  if (services.length === 0) {
+    return (
+      <div className="card-grid">
+        <div className="card card--empty">
+          <p>{t("noServices") || "No services available"}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <Table columns={servicesColumns} data={services} />
+    <div className="card-grid">
+      {services.map((service) => (
+        <Card key={service._id} hoverable>
+          <CardHeader>
+            <CardTitle>{service.name}</CardTitle>
+            {service.price && (
+              <CardBadge variant="success">${service.price}</CardBadge>
+            )}
+          </CardHeader>
+
+          <CardContent>{service.description}</CardContent>
+
+          <CardFooter>
+            <div
+              className="card-owner"
+              onClick={() => handleOwnerClick(service.owner)}
+            >
+              <CardAvatar
+                initial={service.owner?.username?.substring(0, 1).toUpperCase()}
+                size="md"
+              />
+              <span className="card-owner__name">
+                {service.owner?.username}
+              </span>
+            </div>
+            <CardDate date={service.date} />
+          </CardFooter>
+        </Card>
+      ))}
     </div>
   );
 }

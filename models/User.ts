@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Model } from "mongoose";
+import { IUser } from '@/interfaces/IUser';
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema<IUser>(
   {
     firstName: {
       type: String,
@@ -34,11 +35,23 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
 
+    place: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Place",
+      required: true,
+    },
+
+    serviceType: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "ServiceType",
+      default: [],
+    },
+
     isServiceProvider: {
       type: Boolean,
-      default: false,
+      required: false,
     },
-    isAdmin: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false, required: true },
     phone: { type: String, required: false },
   },
   { timestamps: true }

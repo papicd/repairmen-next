@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ServiceSchema = new mongoose.Schema(
+const ServiceRequestSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -14,14 +14,14 @@ const ServiceSchema = new mongoose.Schema(
       trim: true,
     },
 
-    owner: {
+    requestOwner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
-    price: {
-      type: Number,
+    priceRange: {
+      type: String,
       required: false,
     },
 
@@ -33,5 +33,5 @@ const ServiceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Service ||
-mongoose.model("Service", ServiceSchema);
+export default mongoose.models.ServiceRequest ||
+mongoose.model("ServiceRequest", ServiceRequestSchema);

@@ -5,6 +5,7 @@ export interface CurrentUser {
   email: string;
   username: string;
   isServiceProvider: boolean;
+  isAdmin: boolean;
 }
 
 export class UserService {
