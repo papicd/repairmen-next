@@ -20,6 +20,18 @@ const ServiceRequestSchema = new mongoose.Schema(
       required: true,
     },
 
+    place: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Place",
+      required: true,
+    },
+
+    serviceType: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ServiceType",
+      required: true,
+    },
+
     priceRange: {
       type: String,
       required: false,

@@ -22,5 +22,13 @@
   "createPlace": "Create Place",
   "createServiceType": "Create Service Type",
   "creating": "Creating...",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "service": "Service",
+  "serviceRequest": "Service Request",
+  "noServiceRequests": "No service requests available",
+  "all": "All",
+  "filterByPlace": "Filter by place:",
+  "noItems": "No items found",
+  "welcome": "Welcome",
+  "browseServicesAndRequests": "Browse all services and service requests"
 }

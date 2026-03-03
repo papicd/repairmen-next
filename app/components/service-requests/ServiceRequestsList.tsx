@@ -34,36 +34,36 @@ interface ServiceType {
   price?: string;
 }
 
-interface Service {
+interface ServiceRequest {
   _id: string;
   name: string;
   description: string;
-  price?: number;
+  priceRange?: string;
   date?: string;
-  owner: Owner;
+  requestOwner: Owner;
   place?: Place;
   serviceType?: ServiceType;
 }
 
-export default function ServicesList() {
+export default function ServiceRequestsList() {
   const { t } = useLanguage();
-  const [services, setServices] = useState<Service[]>([]);
+  const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchServices = async () => {
+  const fetchServiceRequests = async () => {
     try {
-      const res = await fetch("/api/services");
+      const res = await fetch("/api/service-requests");
       const data = await res.json();
-      setServices(data.services || []);
+      setServiceRequests(data.services || []);
     } catch (err) {
-      console.error("Failed to load services");
+      console.error("Failed to load service requests");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchServices();
+    fetchServiceRequests();
   }, []);
 
   const handleOwnerClick = (owner: Owner) => {
@@ -78,11 +78,11 @@ export default function ServicesList() {
     );
   }
 
-  if (services.length === 0) {
+  if (serviceRequests.length === 0) {
     return (
       <div className="card-grid">
         <div className="card card--empty">
-          <p>{t("noServices") || "No services available"}</p>
+          <p>{t("noServiceRequests") || "No service requests available"}</p>
         </div>
       </div>
     );
@@ -90,27 +90,27 @@ export default function ServicesList() {
 
   return (
     <div className="card-grid">
-      {services.map((service) => (
-        <Card key={service._id} hoverable>
+      {serviceRequests.map((request) => (
+        <Card key={request._id} hoverable>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <CardLabel variant="service">{t("service") || "Service"}</CardLabel>
-              <CardTitle>{service.name}</CardTitle>
+              <CardLabel variant="service-request">{t("serviceRequest") || "Service Request"}</CardLabel>
+              <CardTitle>{request.name}</CardTitle>
             </div>
           </CardHeader>
 
           <CardContent>
-            <p>{service.description}</p>
-            {service.place && (
+            <p>{request.description}</p>
+            {request.place && (
               <p className="card__info">
                 <span className="card__info-label">{t("place") || "Place"}:</span>{" "}
-                {service.place.place}, {service.place.country}
+                {request.place.place}, {request.place.country}
               </p>
             )}
-            {service.serviceType && (
+            {request.serviceType && (
               <p className="card__info">
                 <span className="card__info-label">{t("serviceType") || "Service Type"}:</span>{" "}
-                {service.serviceType.type}
+                {request.serviceType.type}
               </p>
             )}
           </CardContent>
@@ -119,21 +119,21 @@ export default function ServicesList() {
             <div className="flex items-center gap-4">
               <div
                 className="card-owner"
-                onClick={() => handleOwnerClick(service.owner)}
+                onClick={() => handleOwnerClick(request.requestOwner)}
               >
                 <CardAvatar
-                  initial={service.owner?.username?.substring(0, 1).toUpperCase()}
+                  initial={request.requestOwner?.username?.substring(0, 1).toUpperCase()}
                   size="md"
                 />
                 <span className="card-owner__name">
-                  {service.owner?.username}
+                  {request.requestOwner?.username}
                 </span>
               </div>
-              {service.price !== undefined && service.price !== null && (
-                <CardBadge variant="success">${service.price}</CardBadge>
+              {request.priceRange && (
+                <CardBadge variant="warning">{request.priceRange}</CardBadge>
               )}
             </div>
-            <CardDate date={service.date} />
+            <CardDate date={request.date} />
           </CardFooter>
         </Card>
       ))}

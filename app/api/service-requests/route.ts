@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import { connectDB } from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import ServiceRequest from '@/models/ServiceRequest';
+import Place from '@/models/Place';
+import User from '@/models/User';
+import ServiceType from '@/models/ServiceType';
 
 // Middleware to verify authentication
 async function verifyAuth() {
@@ -34,7 +37,9 @@ export async function GET() {
 
   const services = await ServiceRequest
     .find()
-    .populate("requestOwner", "username email");
+    .populate("requestOwner", "username email")
+    .populate("place", "country place currency")
+    .populate("serviceType", "type description price");
 
   return NextResponse.json({ services });
 }
@@ -48,7 +53,7 @@ export async function POST(req: NextRequest) {
   await connectDB();
 
   const body = await req.json();
-  const { name, description, priceRange, date } = body;
+  const { name, description, priceRange, date, place, serviceType } = body;
 
   if (!name || !description) {
     return NextResponse.json(
@@ -62,6 +67,8 @@ export async function POST(req: NextRequest) {
     description,
     priceRange,
     date,
+    place: place || undefined,
+    serviceType: serviceType || undefined,
     requestOwner: auth.userId,
   });
 

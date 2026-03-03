@@ -94,6 +94,23 @@ export function CardBadge({ children, variant = "default", className = "" }: Car
   );
 }
 
+export interface CardLabelProps {
+  children: React.ReactNode;
+  variant?: "service" | "service-request";
+  className?: string;
+}
+
+/**
+ * Card label component for indicating type (service vs service-request)
+ */
+export function CardLabel({ children, variant = "service", className = "" }: CardLabelProps) {
+  return (
+    <span className={`card__label card__label--${variant} ${className}`}>
+      {children}
+    </span>
+  );
+}
+
 export interface CardAvatarProps {
   src?: string;
   alt?: string;

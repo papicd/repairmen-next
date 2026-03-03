@@ -4,6 +4,7 @@ import Modal from '@/app/components/ui/Modal';
 import { useState } from 'react';
 import { useLanguage } from '@/app/context/LanguageContext';
 import AddServiceRequestForm from '@/app/components/service-requests/AddServiceRequestForm';
+import ServiceRequestsList from '@/app/components/service-requests/ServiceRequestsList';
 
 export default function ServiceRequestsPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +27,9 @@ export default function ServiceRequestsPage() {
             +
           </button>
         </div>
+
+        {/* Service Requests List */}
+        <ServiceRequestsList />
 
       </div>
 

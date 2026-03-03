@@ -38,7 +38,10 @@ export async function GET() {
   
   await connectDB();
 
-  const users = await User.find().select("-password");
+  const users = await User.find()
+    .select("-password")
+    .populate("place", "country place currency")
+    .populate("serviceType", "type description price");
 
   return NextResponse.json(users);
 }

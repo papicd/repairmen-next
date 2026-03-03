@@ -14,28 +14,27 @@ import ServiceRequest from '../models/ServiceRequest';
 async function runMigration() {
   await connectDB();
 
-  const placeId = new mongoose.Types.ObjectId(
-    "69a20493d984ff5aad08eea5"
+  const serviceType = new mongoose.Types.ObjectId(
+    "69a549b6d984ff5aad08eead"
   );
+  // const resultUser = await User.updateMany(
+  //   { }, // all users
+  //   { $set: { serviceType: serviceType } }
+  // );
 
   const resultService = await Service.updateMany(
-    { }, // all services
-    { $set: { place: placeId } }
+    { }, // all users
+    { $set: { serviceType: serviceType } }
   );
 
   const resultServiceRequest = await ServiceRequest.updateMany(
-    { }, // all service requests
-    { $set: { place: placeId } }
+    { }, // all users
+    { $set: { serviceType: serviceType } }
   );
 
+  // console.log("Migration complete:", resultUser);
   console.log("Migration complete:", resultService);
   console.log("Migration complete:", resultServiceRequest);
-  // const result = await User.updateMany(
-  //   { }, // all users
-  //   { $set: { place: placeId } }
-  // );
-  //
-  // console.log("Migration complete:", result);
 
   process.exit(0);
 }

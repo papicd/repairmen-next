@@ -36,5 +36,13 @@
   "createPlace": "Kreiraj mjesto",
   "createServiceType": "Kreiraj tip usluge",
   "creating": "Kreiranje...",
-  "loading": "Učitavanje..."
+  "loading": "Učitavanje...",
+  "service": "Usluga",
+  "serviceRequest": "Zahtjev za uslugu",
+  "noServiceRequests": "Nema zahtjeva za usluge",
+  "all": "Sve",
+  "filterByPlace": "Filtriraj po mjestu:",
+  "noItems": "Nema stavki",
+  "welcome": "Dobrodošao",
+  "browseServicesAndRequests": "Pregledaj sve usluge i zahtjeve za usluge"
 }

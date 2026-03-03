@@ -21,7 +21,10 @@ export async function GET() {
 
     await connectDB();
 
-    const user = await User.findById(decoded.userId).select("-password");
+    const user = await User.findById(decoded.userId)
+      .select("-password")
+      .populate("place", "country place currency")
+      .populate("serviceType", "type description price");
 
     if (!user) {
       return Response.json({ user: null });
@@ -54,17 +57,26 @@ export async function PUT(req: NextRequest) {
     ) as { userId: string };
 
     const body = await req.json();
-    const { firstName, lastName, email } = body;
+    const { firstName, lastName, email, phone, place, serviceType } = body;
+
+    const updateData: any = {
+      firstName,
+      lastName,
+      email,
+    };
+
+    // Only update optional fields if they are provided
+    if (phone !== undefined) updateData.phone = phone;
+    if (place !== undefined) updateData.place = place;
+    if (serviceType !== undefined) updateData.serviceType = serviceType;
 
     const updatedUser = await User.findByIdAndUpdate(
       decoded.userId,
-      {
-        firstName,
-        lastName,
-        email,
-      },
+      updateData,
       { new: true }
-    ).select("-password");
+    ).select("-password")
+      .populate("place", "country place currency")
+      .populate("serviceType", "type description price");
 
     if (!updatedUser) {
       return NextResponse.json(

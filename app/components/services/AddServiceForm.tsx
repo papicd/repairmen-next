@@ -1,24 +1,63 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from '@/app/context/AuthContext';
+import { useLanguage } from "@/app/context/LanguageContext";
+
+interface Place {
+  _id: string;
+  country: string;
+  place: string;
+  currency?: string;
+}
+
+interface ServiceType {
+  _id: string;
+  type: string;
+  description?: string;
+  price?: string;
+}
 
 export default function AddServiceForm() {
   const { user } = useAuth();
+  const { t } = useLanguage();
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
   const [form, setForm] = useState({
     name: "",
     description: "",
     price: "",
     date: "",
+    place: "",
+    serviceType: "",
   });
 
   const [loading, setLoading] = useState(false);
+
+  // Fetch places
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [placesRes, serviceTypesRes] = await Promise.all([
+          fetch("/api/places"),
+          fetch("/api/service-types")
+        ]);
+        const placesData = await placesRes.json();
+        const serviceTypesData = await serviceTypesRes.json();
+        setPlaces(placesData.places || []);
+        setServiceTypes(serviceTypesData.serviceTypes || []);
+      } catch (err) {
+        console.error("Failed to fetch data", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   // 👇 Block if not provider
   if (!user || !user.isServiceProvider) return null;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -42,6 +81,8 @@ export default function AddServiceForm() {
           description: form.description,
           price: form.price ? Number(form.price) : undefined,
           date: form.date || undefined,
+          place: form.place || undefined,
+          serviceType: form.serviceType || undefined,
         }),
       });
 
@@ -50,6 +91,8 @@ export default function AddServiceForm() {
         description: "",
         price: "",
         date: "",
+        place: "",
+        serviceType: "",
       });
 
     } catch (err) {
@@ -81,6 +124,34 @@ export default function AddServiceForm() {
           onChange={handleChange}
           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
         />
+
+        <select
+          name="place"
+          value={form.place}
+          onChange={handleChange}
+          className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+        >
+          <option value="">Select Place (optional)</option>
+          {places.map((place) => (
+            <option key={place._id} value={place._id}>
+              {place.place}, {place.country}
+            </option>
+          ))}
+        </select>
+
+        <select
+          name="serviceType"
+          value={form.serviceType}
+          onChange={handleChange}
+          className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+        >
+          <option value="">Select Service Type (optional)</option>
+          {serviceTypes.map((st) => (
+            <option key={st._id} value={st._id}>
+              {st.type}
+            </option>
+          ))}
+        </select>
 
         <input
           type="number"
