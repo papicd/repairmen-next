@@ -4,41 +4,15 @@ import { useEffect, useState } from "react";
 import Table, { TableColumn } from '@/app/components/ui/Table';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/app/context/LanguageContext';
-
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-}
-
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  phone?: string;
-  isServiceProvider: boolean;
-  isAdmin: boolean;
-  place?: Place;
-  serviceType?: ServiceType[];
-  createdAt?: string;
-}
+import type { IUserProfile } from "@/interfaces";
 
 export default function UsersPage() {
   const { t } = useLanguage();
   const router = useRouter();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<IUserProfile[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const usersColumns: TableColumn<User>[] = [
+  const usersColumns: TableColumn<IUserProfile>[] = [
     {
       key: "firstName",
       label: "User",

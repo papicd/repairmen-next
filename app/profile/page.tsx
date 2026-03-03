@@ -2,38 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
-
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-  price?: string;
-}
-
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  phone?: string;
-  place?: Place;
-  serviceType?: ServiceType[];
-  isServiceProvider?: boolean;
-  isAdmin?: boolean;
-  createdAt?: string;
-}
+import type { IPlace, IServiceType, IUserProfile } from "@/interfaces";
 
 export default function ProfilePage() {
   const { t } = useLanguage();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<"personal" | "professional" | "preferences">("personal");
@@ -52,8 +25,8 @@ export default function ProfilePage() {
   });
 
   // Options for selects
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
+  const [places, setPlaces] = useState<IPlace[]>([]);
+  const [serviceTypes, setServiceTypes] = useState<IServiceType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +44,7 @@ export default function ProfilePage() {
             username: userData.user.username || "",
             phone: userData.user.phone || "",
             place: userData.user.place?._id || "",
-            serviceType: userData.user.serviceType?.map((st: ServiceType) => st._id) || [],
+            serviceType: userData.user.serviceType?.map((st: IServiceType) => st._id) || [],
             isServiceProvider: userData.user.isServiceProvider || false,
           });
         }

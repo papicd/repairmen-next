@@ -13,41 +13,11 @@ import {
   CardDate,
   CardLabel,
 } from "@/app/components/ui/Card";
-
-interface Owner {
-  _id: string;
-  username: string;
-  email: string;
-}
-
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-  price?: string;
-}
-
-interface Service {
-  _id: string;
-  name: string;
-  description: string;
-  price?: number;
-  date?: string;
-  owner: Owner;
-  place?: Place;
-  serviceType?: ServiceType;
-}
+import type { IService, IOwner } from "@/interfaces";
 
 export default function ServicesList() {
   const { t } = useLanguage();
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<IService[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchServices = async () => {
@@ -66,7 +36,7 @@ export default function ServicesList() {
     fetchServices();
   }, []);
 
-  const handleOwnerClick = (owner: Owner) => {
+  const handleOwnerClick = (owner: IOwner) => {
     console.log("Owner clicked:", owner);
   };
 

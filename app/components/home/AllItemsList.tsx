@@ -13,59 +13,16 @@ import {
   CardDate,
   CardLabel,
 } from "@/app/components/ui/Card";
+import type { IPlace, IServiceType, IOwner, IItem, IService, IServiceRequest, IServiceWithType, IServiceRequestWithType } from "@/interfaces";
 
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-  price?: string;
-}
-
-interface Owner {
-  _id: string;
-  username: string;
-  email: string;
-}
-
-interface Service {
-  _id: string;
-  name: string;
-  description: string;
-  price?: number;
-  date?: string;
-  place?: Place;
-  serviceType?: ServiceType;
-  owner: Owner;
-  __type: "service";
-}
-
-interface ServiceRequest {
-  _id: string;
-  name: string;
-  description: string;
-  priceRange?: string;
-  date?: string;
-  place?: Place;
-  serviceType?: ServiceType;
-  requestOwner: Owner;
-  __type: "service-request";
-}
-
-type Item = Service | ServiceRequest;
+type TypeFilter = "all" | "service" | "service-request";
 
 export default function AllItemsList() {
   const { t } = useLanguage();
-  const [items, setItems] = useState<Item[]>([]);
-  const [places, setPlaces] = useState<Place[]>([]);
+  const [items, setItems] = useState<IItem[]>([]);
+  const [places, setPlaces] = useState<IPlace[]>([]);
   const [loading, setLoading] = useState(true);
-  const [typeFilter, setTypeFilter] = useState<"all" | "service" | "service-request">("all");
+  const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
 
   const fetchData = async () => {
@@ -73,7 +30,7 @@ export default function AllItemsList() {
       // Fetch services
       const servicesRes = await fetch("/api/services");
       const servicesData = await servicesRes.json();
-      const services: Service[] = (servicesData.services || []).map((s: any) => ({
+      const services: IServiceWithType[] = (servicesData.services || []).map((s: any) => ({
         ...s,
         __type: "service",
       }));
@@ -81,7 +38,7 @@ export default function AllItemsList() {
       // Fetch service requests
       const requestsRes = await fetch("/api/service-requests");
       const requestsData = await requestsRes.json();
-      const requests: ServiceRequest[] = (requestsData.services || []).map((s: any) => ({
+      const requests: IServiceRequestWithType[] = (requestsData.services || []).map((s: any) => ({
         ...s,
         __type: "service-request",
       }));
@@ -104,7 +61,7 @@ export default function AllItemsList() {
     fetchData();
   }, []);
 
-  const handleOwnerClick = (owner: Owner) => {
+  const handleOwnerClick = (owner: IOwner) => {
     console.log("Owner clicked:", owner);
   };
 

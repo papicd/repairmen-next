@@ -6,23 +6,11 @@ interface Props {
   onClose?: () => void;
 }
 
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-  price?: string;
-}
+import type { IPlace, IServiceType } from "@/interfaces";
 
 export default function AddServiceRequestForm({ onClose }: Props) {
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
+  const [places, setPlaces] = useState<IPlace[]>([]);
+  const [serviceTypes, setServiceTypes] = useState<IServiceType[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     description: "",

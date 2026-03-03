@@ -3,40 +3,12 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { useRouter } from "next/navigation";
-
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-  price?: string;
-}
-
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  phone?: string;
-  place?: Place;
-  serviceType?: ServiceType[];
-  isServiceProvider?: boolean;
-  isAdmin?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import type { IUserProfile } from "@/interfaces";
 
 export default function UserDetailsPage({ params }: { params: { id: string } }) {
   const { t } = useLanguage();
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"personal" | "professional" | "account">("personal");
 

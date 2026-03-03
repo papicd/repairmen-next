@@ -3,26 +3,13 @@
 import { useState, useEffect } from "react";
 import { useAuth } from '@/app/context/AuthContext';
 import { useLanguage } from "@/app/context/LanguageContext";
-
-interface Place {
-  _id: string;
-  country: string;
-  place: string;
-  currency?: string;
-}
-
-interface ServiceType {
-  _id: string;
-  type: string;
-  description?: string;
-  price?: string;
-}
+import type { IPlace, IServiceType } from "@/interfaces";
 
 export default function AddServiceForm() {
   const { user } = useAuth();
   const { t } = useLanguage();
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
+  const [places, setPlaces] = useState<IPlace[]>([]);
+  const [serviceTypes, setServiceTypes] = useState<IServiceType[]>([]);
   const [form, setForm] = useState({
     name: "",
     description: "",
