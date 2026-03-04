@@ -112,13 +112,13 @@ export default function ProfilePage() {
       if (res.ok) {
         const data = await res.json();
         setUser(data.user);
-        setSuccessMessage("Profile updated successfully!");
+        setSuccessMessage(t("profileUpdated") || "Profile updated successfully!");
         setTimeout(() => setSuccessMessage(""), 3000);
       } else {
-        alert("Something went wrong");
+        alert(t("somethingWentWrong") || "Something went wrong");
       }
     } catch (err) {
-      alert("Something went wrong");
+      alert(t("somethingWentWrong") || "Something went wrong");
     } finally {
       setSaving(false);
     }
@@ -136,7 +136,7 @@ export default function ProfilePage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <p className="text-gray-600">User not found</p>
+          <p className="text-gray-600">{t("userNotFound") || "User not found"}</p>
         </div>
       </div>
     );
@@ -162,12 +162,12 @@ export default function ProfilePage() {
               </div>
               {user.isAdmin && (
                 <span className="ml-auto bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-md">
-                  Admin
+                  {t("admin") || "Admin"}
                 </span>
               )}
               {user.isServiceProvider && !user.isAdmin && (
                 <span className="ml-auto bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-md">
-                  Service Provider
+                  {t("serviceProvider") || "Service Provider"}
                 </span>
               )}
             </div>
@@ -199,13 +199,13 @@ export default function ProfilePage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                Personal Info
+                {t("personalInfo") || "Personal Info"}
               </span>
             </button>
             <button
-              onClick={() => setActiveTab("professional")}
+              onClick={() => setActiveTab('professional')}
               className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-                activeTab === "professional"
+                activeTab === 'professional'
                   ? "text-blue-600 border-b-2 border-blue-600 bg-blue-50/50"
                   : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               }`}
@@ -214,13 +214,13 @@ export default function ProfilePage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                Professional
+                {t("professionalInfo") || "Professional Information"}
               </span>
             </button>
             <button
-              onClick={() => setActiveTab("preferences")}
+              onClick={() => setActiveTab('preferences')}
               className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
-                activeTab === "preferences"
+                activeTab === 'preferences'
                   ? "text-blue-600 border-b-2 border-blue-600 bg-blue-50/50"
                   : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               }`}
@@ -229,7 +229,7 @@ export default function ProfilePage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                Preferences
+                {t("preferences") || "Preferences"}
               </span>
             </button>
           </div>
@@ -240,7 +240,7 @@ export default function ProfilePage() {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">First Name</label>
+                    <label className="text-sm font-semibold text-gray-700">{t("firstName") || "First Name"}</label>
                     <input
                       type="text"
                       name="firstName"
@@ -250,7 +250,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">Last Name</label>
+                    <label className="text-sm font-semibold text-gray-700">{t("lastName") || "Last Name"}</label>
                     <input
                       type="text"
                       name="lastName"
@@ -262,7 +262,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">Email Address</label>
+                  <label className="text-sm font-semibold text-gray-700">{t("email") || "Email"}</label>
                   <input
                     type="email"
                     name="email"
@@ -273,7 +273,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">Username</label>
+                  <label className="text-sm font-semibold text-gray-700">{t("username") || "Username"}</label>
                   <input
                     type="text"
                     name="username"
@@ -286,7 +286,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">Phone Number</label>
+                  <label className="text-sm font-semibold text-gray-700">{t("phone") || "Phone Number"}</label>
                   <input
                     type="tel"
                     name="phone"
@@ -298,7 +298,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">Location</label>
+                  <label className="text-sm font-semibold text-gray-700">{t("place") || "Place"}</label>
                   <select
                     name="place"
                     value={formData.place}
@@ -317,13 +317,13 @@ export default function ProfilePage() {
             )}
 
             {/* Professional Tab */}
-            {activeTab === "professional" && (
+            {activeTab === 'professional' && (
               <div className="space-y-6">
                 <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">Service Provider Status</h3>
-                      <p className="text-sm text-gray-500 mt-1">Enable this to offer your services to other users</p>
+                      <h3 className="text-lg font-semibold text-gray-900">{t("professionalInfo") || "Professional Information"}</h3>
+                      <p className="text-sm text-gray-500 mt-1">{t("serviceProviderDescription") || "Enable this to offer your services to other users"}</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -341,7 +341,7 @@ export default function ProfilePage() {
                 {formData.isServiceProvider && (
                   <div className="space-y-4">
                     <div>
-                      <label className="text-sm font-semibold text-gray-700 mb-3 block">Your Service Types</label>
+                      <label className="text-sm font-semibold text-gray-700 mb-3 block">{t("yourServiceTypes") || "Your Service Types"}</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {serviceTypes.map((st) => (
                           <label
@@ -377,29 +377,29 @@ export default function ProfilePage() {
             )}
 
             {/* Preferences Tab */}
-            {activeTab === "preferences" && (
+            {activeTab === 'preferences' && (
               <div className="space-y-6">
                 <div className="bg-gray-50 rounded-2xl p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t("accountInfo") || "Account Information"}</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600">Member since</span>
+                      <span className="text-gray-600">{t("memberSince") || "Member since"}</span>
                       <span className="font-medium text-gray-900">
                         {user.createdAt ? new Date(user.createdAt).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "long",
                           day: "numeric"
-                        }) : "N/A"}
+                        }) : t("notAvailable") || "N/A"}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600">Account type</span>
+                      <span className="text-gray-600">{t("accountType") || "Account type"}</span>
                       <span className="font-medium text-gray-900">
-                        {user.isAdmin ? "Administrator" : user.isServiceProvider ? "Service Provider" : "User"}
+                        {user.isAdmin ? t("administrator") : user.isServiceProvider ? t("serviceProvider") : t("user")}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-600">User ID</span>
+                      <span className="text-gray-600">{t("userId") || "User ID"}</span>
                       <span className="font-mono text-sm text-gray-500">{user._id}</span>
                     </div>
                   </div>
@@ -422,10 +422,10 @@ export default function ProfilePage() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Saving...
+                {t("saving") || "Saving..."}
               </span>
             ) : (
-              "Save Changes"
+              t("saveChanges") || "Save Changes"
             )}
           </button>
         </div>
@@ -433,3 +433,7 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+
+
+

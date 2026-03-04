@@ -42,7 +42,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <p className="text-gray-600">User not found</p>
+          <p className="text-gray-600">{t("userNotFound") || "User not found"}</p>
         </div>
       </div>
     );
@@ -59,7 +59,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back to Users
+          {t("backToUsers") || "Back to Users"}
         </button>
 
         {/* Header Card */}
@@ -79,17 +79,17 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               </div>
               {user.isAdmin && (
                 <span className="ml-auto bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-md">
-                  Admin
+                  {t("administrator") || "Admin"}
                 </span>
               )}
               {user.isServiceProvider && !user.isAdmin && (
                 <span className="ml-auto bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-md">
-                  Service Provider
+                  {t("serviceProvider") || "Service Provider"}
                 </span>
               )}
               {!user.isServiceProvider && !user.isAdmin && (
                 <span className="ml-auto bg-gradient-to-r from-gray-400 to-gray-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-md">
-                  User
+                  {t("user") || "User"}
                 </span>
               )}
             </div>
@@ -111,7 +111,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                Personal Info
+                {t("personalInfo") || "Personal Info"}
               </span>
             </button>
             <button
@@ -126,7 +126,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                Professional
+                {t("professional") || "Professional"}
               </span>
             </button>
             <button
@@ -142,7 +142,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                Account
+                {t("account") || "Account"}
               </span>
             </button>
           </div>
@@ -153,32 +153,32 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-gray-50 rounded-xl p-4">
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">First Name</label>
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{t("firstName") || "First Name"}</label>
                     <p className="mt-1 text-gray-900 font-medium">{user.firstName}</p>
                   </div>
                   <div className="bg-gray-50 rounded-xl p-4">
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Last Name</label>
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{t("lastName") || "Last Name"}</label>
                     <p className="mt-1 text-gray-900 font-medium">{user.lastName}</p>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 rounded-xl p-4">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email Address</label>
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{t("emailAddress") || "Email Address"}</label>
                   <p className="mt-1 text-gray-900 font-medium">{user.email}</p>
                 </div>
 
                 <div className="bg-gray-50 rounded-xl p-4">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Username</label>
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{t("username") || "Username"}</label>
                   <p className="mt-1 text-gray-900 font-medium">@{user.username}</p>
                 </div>
 
                 <div className="bg-gray-50 rounded-xl p-4">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Phone Number</label>
-                  <p className="mt-1 text-gray-900 font-medium">{user.phone || <span className="text-gray-400">Not provided</span>}</p>
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{t("phoneNumber") || "Phone Number"}</label>
+                  <p className="mt-1 text-gray-900 font-medium">{user.phone || <span className="text-gray-400">{t("notProvided") || "Not provided"}</span>}</p>
                 </div>
 
                 <div className="bg-gray-50 rounded-xl p-4">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Location</label>
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{t("location") || "Location"}</label>
                   <p className="mt-1 text-gray-900 font-medium">
                     {user.place ? (
                       <>
@@ -186,7 +186,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                         {user.place.currency && <span className="text-gray-500 text-sm ml-2">({user.place.currency})</span>}
                       </>
                     ) : (
-                      <span className="text-gray-400">Not set</span>
+                      <span className="text-gray-400">{t("notSet") || "Not set"}</span>
                     )}
                   </p>
                 </div>
@@ -199,22 +199,22 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                 <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">Service Provider</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">{t("serviceProvider") || "Service Provider"}</h3>
                       <p className="text-sm text-gray-500 mt-1">
                         {user.isServiceProvider 
-                          ? "This user offers services to other users" 
-                          : "This user does not offer services"}
+                          ? t("userOffersServices") || "This user offers services to other users" 
+                          : t("userDoesNotOfferServices") || "This user does not offer services"}
                       </p>
                     </div>
                     <span className={`table__badge ${user.isServiceProvider ? 'table__badge--success' : 'table__badge--default'}`}>
-                      {user.isServiceProvider ? "Active" : "Inactive"}
+                      {user.isServiceProvider ? t("active") || "Active" : t("inactive") || "Inactive"}
                     </span>
                   </div>
                 </div>
 
                 {user.isServiceProvider && user.serviceType && user.serviceType.length > 0 && (
                   <div>
-                    <label className="text-sm font-semibold text-gray-700 mb-3 block">Service Types</label>
+                    <label className="text-sm font-semibold text-gray-700 mb-3 block">{t("serviceTypes") || "Service Types"}</label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {user.serviceType.map((st) => (
                         <div
@@ -240,7 +240,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
 
                 {user.isServiceProvider && (!user.serviceType || user.serviceType.length === 0) && (
                   <div className="bg-gray-50 rounded-xl p-6 text-center">
-                    <p className="text-gray-500">No service types assigned</p>
+                    <p className="text-gray-500">{t("noServiceTypesAssigned") || "No service types assigned"}</p>
                   </div>
                 )}
               </div>
@@ -250,22 +250,22 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
             {activeTab === "account" && (
               <div className="space-y-6">
                 <div className="bg-gray-50 rounded-2xl p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t("accountInformation") || "Account Information"}</h3>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600">Account Type</span>
+                      <span className="text-gray-600">{t("accountType") || "Account Type"}</span>
                       <span className="font-medium">
                         {user.isAdmin ? (
-                          <span className="text-amber-600">Administrator</span>
+                          <span className="text-amber-600">{t("administrator") || "Administrator"}</span>
                         ) : user.isServiceProvider ? (
-                          <span className="text-green-600">Service Provider</span>
+                          <span className="text-green-600">{t("serviceProvider") || "Service Provider"}</span>
                         ) : (
-                          <span className="text-gray-600">User</span>
+                          <span className="text-gray-600">{t("user") || "User"}</span>
                         )}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600">Member since</span>
+                      <span className="text-gray-600">{t("memberSince") || "Member since"}</span>
                       <span className="font-medium text-gray-900">
                         {user.createdAt ? new Date(user.createdAt).toLocaleDateString("en-US", {
                           year: "numeric",
@@ -275,7 +275,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                      <span className="text-gray-600">Last updated</span>
+                      <span className="text-gray-600">{t("lastUpdated") || "Last updated"}</span>
                       <span className="font-medium text-gray-900">
                         {user.updatedAt ? new Date(user.updatedAt).toLocaleDateString("en-US", {
                           year: "numeric",
@@ -285,7 +285,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-600">User ID</span>
+                      <span className="text-gray-600">{t("userID") || "User ID"}</span>
                       <span className="font-mono text-sm text-gray-500">{user._id}</span>
                     </div>
                   </div>

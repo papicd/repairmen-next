@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 interface Props {
   onClose?: () => void;
@@ -9,6 +10,7 @@ interface Props {
 import type { IPlace, IServiceType } from "@/interfaces";
 
 export default function AddServiceRequestForm({ onClose }: Props) {
+  const { t } = useLanguage();
   const [places, setPlaces] = useState<IPlace[]>([]);
   const [serviceTypes, setServiceTypes] = useState<IServiceType[]>([]);
   const [formData, setFormData] = useState({
@@ -93,7 +95,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
       {/* Name */}
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-semibold text-gray-700">
-          Service Name *
+          {t("serviceName") || "Service Name"} *
         </label>
         <input
           type="text"
@@ -101,7 +103,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
           required
           value={formData.name}
           onChange={handleChange}
-          placeholder="Enter service name"
+          placeholder={t("enterServiceName") || "Enter service name"}
           className="w-full px-4 py-3 rounded-xl border border-gray-200
                      focus:outline-none focus:ring-2 focus:ring-blue-500
                      focus:border-transparent transition"
@@ -111,7 +113,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
       {/* Description */}
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-semibold text-gray-700">
-          Description *
+          {t("description") || "Description"} *
         </label>
         <textarea
           name="description"
@@ -119,7 +121,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
           rows={4}
           value={formData.description}
           onChange={handleChange}
-          placeholder="Describe the service request..."
+          placeholder={t("describeServiceRequest") || "Describe the service request..."}
           className="w-full px-4 py-3 rounded-xl border border-gray-200
                      focus:outline-none focus:ring-2 focus:ring-blue-500
                      focus:border-transparent transition resize-none"
@@ -129,7 +131,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
       {/* Place */}
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-semibold text-gray-700">
-          Place
+          {t("place") || "Place"}
         </label>
         <select
           name="place"
@@ -151,7 +153,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
       {/* Service Type */}
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-semibold text-gray-700">
-          Service Type
+          {t("serviceType") || "Service Type"}
         </label>
         <select
           name="serviceType"
@@ -173,7 +175,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
       {/* Price Range */}
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-semibold text-gray-700">
-          Price Range
+          {t("priceRange") || "Price Range"}
         </label>
         <input
           type="text"
@@ -190,7 +192,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
       {/* Date */}
       <div className="flex flex-col space-y-2">
         <label className="text-sm font-semibold text-gray-700">
-          Preferred Date
+          {t("date") || "Date"}
         </label>
         <input
           type="date"
@@ -211,7 +213,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
           className="px-5 py-2.5 rounded-xl border border-gray-300
                      text-gray-600 hover:bg-gray-100 transition"
         >
-          Cancel
+          {t("cancel") || "Cancel"}
         </button>
 
         <button
@@ -221,7 +223,7 @@ export default function AddServiceRequestForm({ onClose }: Props) {
                      font-medium hover:bg-blue-700 transition
                      disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Saving..." : "Create Service"}
+          {loading ? t("saving") || "Saving..." : t("addNewServiceRequest") || "Create Service"}
         </button>
       </div>
     </form>

@@ -34,7 +34,7 @@ export default function AddServiceForm() {
         setPlaces(placesData.places || []);
         setServiceTypes(serviceTypesData.serviceTypes || []);
       } catch (err) {
-        console.error("Failed to fetch data", err);
+        console.error(t("failedToFetch") || "Failed to fetch data", err);
       }
     };
     fetchData();
@@ -51,7 +51,7 @@ export default function AddServiceForm() {
 
   const handleSubmit = async () => {
     if (!form.name || !form.description) {
-      alert("Name and description are required");
+      alert(t("nameAndDescriptionRequired") || "Name and description are required");
       return;
     }
 
@@ -92,13 +92,13 @@ export default function AddServiceForm() {
   return (
     <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-xl mb-10">
       <h2 className="text-2xl font-semibold mb-4">
-        Add New Service
+        {t("addNewService") || "Add New Service"}
       </h2>
 
       <div className="space-y-4">
         <input
           name="name"
-          placeholder="Service Name"
+          placeholder={t("serviceName") || "Service Name"}
           value={form.name}
           onChange={handleChange}
           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -106,7 +106,7 @@ export default function AddServiceForm() {
 
         <textarea
           name="description"
-          placeholder="Service Description"
+          placeholder={t("description") || "Service Description"}
           value={form.description}
           onChange={handleChange}
           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -118,7 +118,7 @@ export default function AddServiceForm() {
           onChange={handleChange}
           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
         >
-          <option value="">Select Place (optional)</option>
+          <option value="">{t("selectPlace") || "Select Place"} ({t("optional") || "optional"})</option>
           {places.map((place) => (
             <option key={place._id} value={place._id}>
               {place.place}, {place.country}
@@ -132,7 +132,7 @@ export default function AddServiceForm() {
           onChange={handleChange}
           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
         >
-          <option value="">Select Service Type (optional)</option>
+          <option value="">{t("selectServiceType") || "Select Service Type"} ({t("optional") || "optional"})</option>
           {serviceTypes.map((st) => (
             <option key={st._id} value={st._id}>
               {st.type}
@@ -143,7 +143,7 @@ export default function AddServiceForm() {
         <input
           type="number"
           name="price"
-          placeholder="Price (optional)"
+          placeholder={t("price") + " (" + (t("optional") || "optional") + ")" || "Price (optional)"}
           value={form.price}
           onChange={handleChange}
           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -162,7 +162,7 @@ export default function AddServiceForm() {
           disabled={loading}
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
         >
-          {loading ? "Creating..." : "Create Service"}
+          {loading ? t("creating") || "Creating..." : t("createService") || "Create Service"}
         </button>
       </div>
     </div>

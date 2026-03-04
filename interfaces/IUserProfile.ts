@@ -16,4 +16,5 @@ export interface IUserProfile {
   isServiceProvider?: boolean;
   isAdmin?: boolean;
   createdAt?: string;
+  updatedAt?: string;
 }

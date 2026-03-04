@@ -58,8 +58,10 @@ export default function Navbar() {
         <div className="navbar__right">
 
           {/* 🌍 Language Switch */}
+          {/*TODO Remove display none for multi languages*/}
           <button
-            className="navbar__lang"
+            className="navbar__lang d-none"
+            style={{ display: 'none' }}
             onClick={() => changeLanguage(locale === "en" ? "sr" : "en")}
           >
             {locale === "en" ? "SR" : "EN"}
@@ -132,6 +134,7 @@ export default function Navbar() {
         {/* 🌍 Mobile Language Switch */}
         <button
           className="navbar__mobile-btn"
+          style={{ display: 'none' }}
           onClick={() => changeLanguage(locale === "en" ? "sr" : "en")}
         >
           {locale === "en" ? "Switch to Serbian" : "Prebaci na engleski"}

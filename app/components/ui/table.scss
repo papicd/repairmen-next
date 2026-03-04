@@ -229,6 +229,17 @@
   }
 }
 
+/* Hide desktop table on mobile */
+@media (max-width: 640px) {
+  .custom-table {
+    display: none;
+  }
+
+  .table-mobile-card {
+    display: flex;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .custom-table {
@@ -240,5 +251,106 @@
 
   .table__avatar-email {
     display: none;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+/* Mobile Card View - hidden by default */
+.table-mobile-card {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .custom-table-wrapper {
+    overflow: visible;
+  }
+
+  .table-mobile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .table-mobile-card__item {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f5f9;
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    &--clickable {
+      cursor: pointer;
+    }
+  }
+
+  .table-mobile-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .table-mobile-card__title {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 1rem;
+  }
+
+  .table-mobile-card__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px dashed #f1f5f9;
+    }
+  }
+
+  .table-mobile-card__label {
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+
+  .table-mobile-card__value {
+    color: #334155;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-align: right;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .custom-table-wrapper {
+    border-radius: 12px;
+  }
+
+  .table-mobile-card__item {
+    padding: 12px;
+  }
+
+  .table-mobile-card__title {
+    font-size: 0.9rem;
+  }
+
+  .table-mobile-card__row {
+    padding: 6px 0;
+  }
+
+  .table-mobile-card__label,
+  .table-mobile-card__value {
+    font-size: 0.8rem;
   }
 }

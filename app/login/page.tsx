@@ -3,10 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from '@/app/context/AuthContext';
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function LoginPage() {
   const { refreshUser } = useAuth();
   const router = useRouter();
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +27,7 @@ export default function LoginPage() {
       await refreshUser();
       router.push("/"); // ✅ redirect to home
     } else {
-      alert("Invalid credentials");
+      alert(t("invalidCredentials") || "Invalid credentials");
     }
   };
 
@@ -35,11 +37,11 @@ export default function LoginPage() {
         onSubmit={handleLogin}
         className="bg-white p-8 rounded-2xl shadow-lg w-96 space-y-4"
       >
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+        <h2 className="text-2xl font-bold text-center">{t("login") || "Login"}</h2>
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("email") || "Email"}
           className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -48,7 +50,7 @@ export default function LoginPage() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder={t("password") || "Password"}
           className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -59,13 +61,13 @@ export default function LoginPage() {
           type="submit"
           className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
         >
-          Login
+          {t("login") || "Login"}
         </button>
 
         <p className="text-sm text-center">
-          Don't have an account?{" "}
+          {t("dontHaveAccount") || "Don't have an account?"}{" "}
           <a href="/register" className="text-blue-600 hover:underline">
-            Register
+            {t("register") || "Register"}
           </a>
         </p>
       </form>

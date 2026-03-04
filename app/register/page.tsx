@@ -2,9 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { t } = useLanguage();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -38,7 +40,7 @@ export default function RegisterPage() {
     if (res.ok) {
       router.push("/login");
     } else {
-      setError(data.message || "Registration failed");
+      setError(t("registrationFailed") || data.message || "Registration failed");
     }
   };
 
@@ -48,7 +50,7 @@ export default function RegisterPage() {
         onSubmit={handleRegister}
         className="bg-white p-8 rounded-2xl shadow-lg w-96 space-y-4"
       >
-        <h2 className="text-2xl font-bold text-center">Register</h2>
+        <h2 className="text-2xl font-bold text-center">{t("register") || "Register"}</h2>
 
         {error && (
           <p className="text-red-500 text-sm text-center">{error}</p>
@@ -56,7 +58,7 @@ export default function RegisterPage() {
 
         <input
           type="text"
-          placeholder="First Name"
+          placeholder={t("firstName") || "First Name"}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -65,7 +67,7 @@ export default function RegisterPage() {
 
         <input
           type="text"
-          placeholder="Last Name"
+          placeholder={t("lastName") || "Last Name"}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -74,7 +76,7 @@ export default function RegisterPage() {
 
         <input
           type="text"
-          placeholder="Username"
+          placeholder={t("username") || "Username"}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -83,7 +85,7 @@ export default function RegisterPage() {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("email") || "Email"}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -92,7 +94,7 @@ export default function RegisterPage() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder={t("password") || "Password"}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -105,18 +107,18 @@ export default function RegisterPage() {
             checked={isServiceProvider}
             onChange={(e) => setIsServiceProvider(e.target.checked)}
           />
-          <span>Register as Service Provider</span>
+          <span>{t("registerAsServiceProvider") || "Register as Service Provider"}</span>
         </label>
 
         <button
           type="submit"
           className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition"
         >
-          Register
+          {t("register") || "Register"}
         </button>
 
         <p className="text-sm text-center">
-          Already have an account?{" "}
+          {t("alreadyHaveAccount") || "Already have an account?"}{" "}
           <a href="/login" className="text-blue-600 hover:underline">
             Login
           </a>

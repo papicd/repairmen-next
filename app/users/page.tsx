@@ -15,7 +15,7 @@ export default function UsersPage() {
   const usersColumns: TableColumn<IUserProfile>[] = [
     {
       key: "firstName",
-      label: "User",
+      label: t("user") || "User",
       render: (row) => (
         <div className="table__avatar">
           <div className="table__avatar-initials">
@@ -30,24 +30,25 @@ export default function UsersPage() {
     },
     {
       key: "email",
-      label: "Email",
+      label: t("email") || "Email",
+      hideOnMobile: true,
     },
     {
       key: "phone",
-      label: "Phone",
+      label: t("phone") || "Phone",
       render: (row) => row.phone || <span className="text-gray-400">-</span>,
     },
     {
       key: "isServiceProvider",
-      label: "Role",
+      label: t("role") || "Role",
       render: (row) => {
         if (row.isAdmin) {
-          return <span className="table__badge table__badge--warning">Admin</span>;
+          return <span className="table__badge table__badge--warning">{t("administrator") || "Admin"}</span>;
         }
         if (row.isServiceProvider) {
-          return <span className="table__badge table__badge--success">Provider</span>;
+          return <span className="table__badge table__badge--success">{t("provider") || "Provider"}</span>;
         }
-        return <span className="table__badge table__badge--default">User</span>;
+        return <span className="table__badge table__badge--default">{t("user") || "User"}</span>;
       },
     },
   ];
@@ -75,7 +76,7 @@ export default function UsersPage() {
           <div className="bg-white rounded-2xl shadow-lg p-12">
             <div className="table__loading">
               <div className="table__loading-spinner"></div>
-              <p className="text-gray-500">Loading users...</p>
+              <p className="text-gray-500">{t("loadingUsers") || "Loading users..."}</p>
             </div>
           </div>
         </div>
@@ -88,8 +89,8 @@ export default function UsersPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Users</h1>
-          <p className="text-gray-500 mt-2">Manage and view all registered users</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t("users") || "Users"}</h1>
+          <p className="text-gray-500 mt-2">{t("manageUsers") || "Manage and view all registered users"}</p>
         </div>
 
         {/* Table */}
@@ -97,23 +98,24 @@ export default function UsersPage() {
           {users.length === 0 ? (
             <div className="table__empty">
               <div className="table__empty-icon">👥</div>
-              <p className="table__empty-text">No users found</p>
+              <p className="table__empty-text">{t("noUsersFound") || "No users found"}</p>
             </div>
           ) : (
             <Table 
               columns={usersColumns} 
               data={users} 
               onRowClick={(row) => router.push(`/users/${row._id}`)} 
-              getRowKey={(row) => row._id} 
+              getRowKey={(row) => row._id}
+              mobileTitleColumn="firstName"
             />
           )}
         </div>
 
         {/* Footer Stats */}
         <div className="mt-6 flex gap-6 text-sm text-gray-500">
-          <span>Total Users: <strong className="text-gray-900">{users.length}</strong></span>
-          <span>Providers: <strong className="text-green-600">{users.filter(u => u.isServiceProvider).length}</strong></span>
-          <span>Admins: <strong className="text-amber-600">{users.filter(u => u.isAdmin).length}</strong></span>
+          <span>{t("totalUsers") || "Total Users"}: <strong className="text-gray-900">{users.length}</strong></span>
+          <span>{t("providers") || "Providers"}: <strong className="text-green-600">{users.filter(u => u.isServiceProvider).length}</strong></span>
+          <span>{t("admins") || "Admins"}: <strong className="text-amber-600">{users.filter(u => u.isAdmin).length}</strong></span>
         </div>
       </div>
     </div>
