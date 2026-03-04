@@ -12,10 +12,13 @@ export async function POST(req: Request) {
       email,
       username,
       password,
+      place,
+      serviceType,
+      phone,
       isServiceProvider,
     } = await req.json();
 
-    if (!firstName || !lastName || !email || !username || !password) {
+    if (!firstName || !lastName || !email || !username || !password || !place) {
       return Response.json(
         { message: "All required fields must be filled" },
         { status: 400 }
@@ -46,7 +49,10 @@ export async function POST(req: Request) {
       email,
       username,
       password: hashedPassword,
-      isServiceProvider: isServiceProvider ?? false,
+      place,
+      serviceType: serviceType || [],
+      phone: phone || undefined,
+      isServiceProvider: isServiceProvider || false,
     });
 
     return Response.json(

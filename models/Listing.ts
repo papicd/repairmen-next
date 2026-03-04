@@ -1,6 +1,22 @@
 import mongoose from "mongoose";
 
-const ServiceRequestSchema = new mongoose.Schema(
+export type ListingType = "offer" | "demand";
+
+export interface IListing {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  description: string;
+  owner: mongoose.Types.ObjectId;
+  place: mongoose.Types.ObjectId;
+  serviceType: mongoose.Types.ObjectId;
+  priceRange?: string;
+  date?: Date;
+  type: ListingType;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const ListingSchema = new mongoose.Schema<IListing>(
   {
     name: {
       type: String,
@@ -14,7 +30,7 @@ const ServiceRequestSchema = new mongoose.Schema(
       trim: true,
     },
 
-    requestOwner: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -39,11 +55,17 @@ const ServiceRequestSchema = new mongoose.Schema(
 
     date: {
       type: Date,
-      required: false
-    }
+      required: false,
+    },
+
+    type: {
+      type: String,
+      enum: ["offer", "demand"],
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.ServiceRequest ||
-mongoose.model("ServiceRequest", ServiceRequestSchema);
+export default mongoose.models.Listing ||
+  mongoose.model("Listing", ListingSchema);

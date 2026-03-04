@@ -13,7 +13,7 @@ export default function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="navbar__btn navbar__btn--primary"
+      className="navbar__btn navbar__btn--primary cursor-pointer"
     >
       {t("logout")}
     </button>

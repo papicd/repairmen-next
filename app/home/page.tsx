@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from '@/app/context/AuthContext';
-import AllItemsList from '@/app/components/home/AllItemsList';
+import ListingsList from '@/app/components/listings/ListingsList';
 import { useLanguage } from '@/app/context/LanguageContext';
 
 export default function HomePage() {
@@ -25,12 +25,14 @@ export default function HomePage() {
             {t("welcome") || "Welcome"} {user?.firstName}!
           </h1>
           <p className="text-gray-600 mt-2">
-            {t("browseServicesAndRequests") || "Browse all services and service requests"}
+            {user
+              ? t("browseListings") || "Browse all listings"
+              : t("browseOffers") || "Browse all offers"}
           </p>
         </div>
 
-        {/* All Items List with Filters */}
-        <AllItemsList />
+        {/* Listings with Filters */}
+        <ListingsList filter="all" />
       </div>
     </div>
   );

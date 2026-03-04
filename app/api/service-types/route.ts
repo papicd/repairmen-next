@@ -34,15 +34,6 @@ async function verifyAdmin() {
 }
 
 export async function GET() {
-  const auth = await verifyAdmin();
-
-  if (!auth) {
-    return NextResponse.json(
-      { message: "Unauthorized - Admin access required" },
-      { status: 401 }
-    );
-  }
-
   try {
     await connectDB();
     const serviceTypes = await ServiceType.find().sort({ createdAt: -1 });

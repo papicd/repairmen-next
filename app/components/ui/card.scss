@@ -13,7 +13,7 @@
   border: 1px solid #e5e7eb;
 
   &--hoverable {
-    cursor: pointer;
+    cursor: default;
 
     &:hover {
       transform: translateY(-4px);
@@ -118,6 +118,7 @@
 
   // Avatar
   &__avatar {
+    cursor: pointer;
     border-radius: 50%;
     display: flex;
     align-items: center;

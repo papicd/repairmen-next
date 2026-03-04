@@ -29,12 +29,8 @@ export default function Navbar() {
             {t("home")}
           </Link>
 
-          <Link href="/services" className="navbar__link">
-            {t("services")}
-          </Link>
-
-          <Link href="/service-requests" className="navbar__link">
-            {t("serviceRequests")}
+          <Link href="/listings" className="navbar__link">
+            {t("listings")}
           </Link>
 
           {user && (
@@ -107,12 +103,8 @@ export default function Navbar() {
           {t("home")}
         </Link>
 
-        <Link href="/services" className="navbar__mobile-link">
-          {t("services")}
-        </Link>
-
-        <Link href="/service-requests" className="navbar__link">
-          {t("serviceRequests")}
+        <Link href="/listings" className="navbar__mobile-link">
+          {t("listings")}
         </Link>
 
         {user && (

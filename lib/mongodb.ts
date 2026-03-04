@@ -18,8 +18,7 @@ function registerModels() {
   require("@/models/User");
   require("@/models/Place");
   require("@/models/ServiceType");
-  require("@/models/Service");
-  require("@/models/ServiceRequest");
+  require("@/models/Listing");
 }
 
 export async function connectDB() {

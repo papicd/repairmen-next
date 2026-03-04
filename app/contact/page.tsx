@@ -108,7 +108,7 @@ export default function ContactPage() {
               </svg>
             </div>
             <h3 className="font-semibold text-gray-900 mb-1">{t("location") || "Location"}</h3>
-            <p className="text-gray-600 text-sm">Serbia</p>
+            <p className="text-gray-600 text-sm">Banja Luka, Bosna i Hercegovina</p>
           </div>
         </div>
 

@@ -50,7 +50,7 @@ export interface CardTitleProps {
  * Card title
  */
 export function CardTitle({ children, className = "" }: CardTitleProps) {
-  return <h3 className={`card__title ${className}`}>{children}</h3>;
+  return <h2 className={`card__title ${className}`}>{children}</h2>;
 }
 
 export interface CardContentProps {
@@ -96,7 +96,7 @@ export function CardBadge({ children, variant = "default", className = "" }: Car
 
 export interface CardLabelProps {
   children: React.ReactNode;
-  variant?: "service" | "service-request";
+  variant?: "service" | "service-request" | "offer" | "demand";
   className?: string;
 }
 
@@ -104,8 +104,10 @@ export interface CardLabelProps {
  * Card label component for indicating type (service vs service-request)
  */
 export function CardLabel({ children, variant = "service", className = "" }: CardLabelProps) {
+  // Map new variants to CSS classes for backwards compatibility
+  const cssVariant = variant === "offer" ? "service" : variant === "demand" ? "service-request" : variant;
   return (
-    <span className={`card__label card__label--${variant} ${className}`}>
+    <span className={`card__label card__label--${cssVariant} ${className}`}>
       {children}
     </span>
   );
