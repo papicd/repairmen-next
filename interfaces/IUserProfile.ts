@@ -15,6 +15,7 @@ export interface IUserProfile {
   serviceType?: IServiceType[];
   isServiceProvider?: boolean;
   isAdmin?: boolean;
+  isApproved?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

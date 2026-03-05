@@ -11,6 +11,7 @@ export default function UsersPage() {
   const router = useRouter();
   const [users, setUsers] = useState<IUserProfile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<IUserProfile | null>(null);
 
   const usersColumns: TableColumn<IUserProfile>[] = [
     {
@@ -51,22 +52,90 @@ export default function UsersPage() {
         return <span className="table__badge table__badge--default">{t("user") || "User"}</span>;
       },
     },
+    {
+      key: "isApproved",
+      label: t("status") || "Status",
+      render: (row) => {
+        // Admin is always approved
+        if (row.isAdmin) {
+          return <span className="table__badge table__badge--success">{t("approved") || "Active"}</span>;
+        }
+        if (row.isApproved) {
+          return <span className="table__badge table__badge--success">{t("approved") || "Approved"}</span>;
+        }
+        return <span className="table__badge table__badge--warning">{t("pending") || "Pending"}</span>;
+      },
+    },
   ];
 
+  // Add actions column for admins
+  if (currentUser?.isAdmin) {
+    usersColumns.push({
+      key: "actions" as keyof IUserProfile,
+      label: t("actions") || "Actions",
+      render: (row) => {
+        // Don't show approve button for admins or already approved users
+        if (row.isAdmin || row.isApproved) {
+          return <span className="text-gray-400 text-sm">-</span>;
+        }
+        return (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              approveUser(row._id);
+            }}
+            className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
+          >
+            {t("approve") || "Approve"}
+          </button>
+        );
+      },
+    });
+  }
+
+  const approveUser = async (userId: string) => {
+    try {
+      const res = await fetch(`/api/users/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isApproved: true }),
+      });
+
+      if (res.ok) {
+        // Update the local state
+        setUsers(users.map(user => 
+          user._id === userId ? { ...user, isApproved: true } : user
+        ));
+      } else {
+        console.error("Failed to approve user");
+      }
+    } catch (error) {
+      console.error("Error approving user:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       try {
+        // Fetch current user
+        const meRes = await fetch("/api/me");
+        if (meRes.ok) {
+          const meData = await meRes.json();
+          setCurrentUser(meData.user);
+        }
+
+        // Fetch all users
         const res = await fetch("/api/users");
         const data = await res.json();
         setUsers(data);
       } catch (error) {
-        console.error("Failed to fetch users:", error);
+        console.error("Failed to fetch data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -116,6 +185,7 @@ export default function UsersPage() {
           <span>{t("totalUsers") || "Total Users"}: <strong className="text-gray-900">{users.length}</strong></span>
           <span>{t("providers") || "Providers"}: <strong className="text-green-600">{users.filter(u => u.isServiceProvider).length}</strong></span>
           <span>{t("admins") || "Admins"}: <strong className="text-amber-600">{users.filter(u => u.isAdmin).length}</strong></span>
+          <span>{t("pending") || "Pending"}: <strong className="text-orange-600">{users.filter(u => !u.isAdmin && !u.isApproved).length}</strong></span>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ export interface IUser {
   password: string,
   place: Types.ObjectId,
   isAdmin: boolean;
+  isApproved: boolean;
   serviceType: Types.ObjectId[],
   phone?: string;
   isServiceProvider?: boolean;

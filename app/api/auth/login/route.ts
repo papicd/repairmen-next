@@ -29,6 +29,14 @@ export async function POST(req: Request) {
       );
     }
 
+    // Check if user is approved
+    if (!user.isApproved) {
+      return Response.json(
+        { message: "Your account is pending approval. Please wait for an administrator to approve your registration." },
+        { status: 403 }
+      );
+    }
+
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET!,

@@ -33,6 +33,8 @@ export async function GET(req: NextRequest) {
     const auth = await verifyAuth();
     const { searchParams } = new URL(req.url);
     const type = searchParams.get("type"); // "offer", "demand", or null for all
+    const serviceType = searchParams.get("serviceType"); // comma-separated IDs
+    const place = searchParams.get("place"); // comma-separated IDs
 
     // Build query based on type filter and auth status
     const query: any = {};
@@ -54,6 +56,22 @@ export async function GET(req: NextRequest) {
         query.type = "offer";
       }
       // If logged in, show all (no filter)
+    }
+
+    // Add serviceType filter (supports multiple - comma-separated)
+    if (serviceType) {
+      const serviceTypeIds = serviceType.split(",").filter(Boolean);
+      if (serviceTypeIds.length > 0) {
+        query.serviceType = { $in: serviceTypeIds };
+      }
+    }
+
+    // Add place filter (supports multiple - comma-separated)
+    if (place) {
+      const placeIds = place.split(",").filter(Boolean);
+      if (placeIds.length > 0) {
+        query.place = { $in: placeIds };
+      }
     }
 
     const listings = await Listing.find(query)

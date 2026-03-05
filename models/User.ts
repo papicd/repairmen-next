@@ -52,6 +52,7 @@ const UserSchema = new mongoose.Schema<IUser>(
       required: false,
     },
     isAdmin: { type: Boolean, default: false, required: true },
+    isApproved: { type: Boolean, default: false, required: true },
     phone: { type: String, required: false },
   },
   { timestamps: true }

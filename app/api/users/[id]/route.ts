@@ -54,3 +54,54 @@ export async function GET(
 
   return NextResponse.json(user);
 }
+
+// PATCH - Update user (admin can approve users)
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const auth = await verifyAuth();
+  
+  if (!auth) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+  
+  await connectDB();
+
+  // Get the current user to check if they're admin
+  const currentUser = await User.findById(auth.userId);
+  if (!currentUser || !currentUser.isAdmin) {
+    return NextResponse.json(
+      { message: "Only administrators can approve users" },
+      { status: 403 }
+    );
+  }
+
+  const body = await req.json();
+  const { isApproved } = body;
+
+  if (isApproved === undefined) {
+    return NextResponse.json(
+      { message: "isApproved field is required" },
+      { status: 400 }
+    );
+  }
+
+  const user = await User.findByIdAndUpdate(
+    params.id,
+    { isApproved },
+    { new: true }
+  ).select("-password");
+
+  if (!user) {
+    return NextResponse.json(
+      { message: "User not found" },
+      { status: 404 }
+    );
+  }
+
+  return NextResponse.json(user);
+}

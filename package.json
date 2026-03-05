@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "create-admin": "ts-node -r tsconfig-paths/register scripts/createAdminUser.ts",
+    "migrate-approval": "ts-node -r tsconfig-paths/register scripts/migrateApprovalStatus.ts"
   },
   "dependencies": {
     "@types/bcryptjs": "^3.0.0",

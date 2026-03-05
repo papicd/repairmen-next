@@ -164,5 +164,9 @@
   "message": "Poruka",
   "enterYourMessage": "Unesite vašu poruku",
   "sending": "Slanje...",
-  "responseTime": "Obično odgovaramo u roku od 24-48 sati"
+  "responseTime": "Obično odgovaramo u roku od 24-48 sati",
+  "clearFilters": "Resetuj filtere",
+  "selectPlaces": "Odaberi mjesta",
+  "selectServiceTypes": "Odaberi vrste usluge",
+  "type": "Tip"
 }
