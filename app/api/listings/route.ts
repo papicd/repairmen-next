@@ -35,9 +35,15 @@ export async function GET(req: NextRequest) {
     const type = searchParams.get("type"); // "offer", "demand", or null for all
     const serviceType = searchParams.get("serviceType"); // comma-separated IDs
     const place = searchParams.get("place"); // comma-separated IDs
+    const showClosed = searchParams.get("showClosed") === "true"; // include closed listings
 
     // Build query based on type filter and auth status
     const query: any = {};
+    
+    // By default, exclude closed listings
+    if (!showClosed) {
+      query.closed = false;
+    }
     
     if (type === "offer") {
       query.type = "offer";
@@ -123,13 +129,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // priceRange is required for both offers and demands
-    if (!priceRange) {
-      return NextResponse.json(
-        { message: "Price range is required" },
-        { status: 400 }
-      );
-    }
+    // priceRange is optional for offers and demands
+    // if provided, it will be saved
 
     const newListing = await Listing.create({
       name,

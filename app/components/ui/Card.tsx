@@ -5,7 +5,7 @@ import "./card.scss";
 export interface CardProps {
   children: React.ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
   hoverable?: boolean;
 }
 

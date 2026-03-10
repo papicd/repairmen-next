@@ -80,11 +80,7 @@ export default function AddListingForm({ onClose }: { onClose: () => void }) {
       return;
     }
 
-    // Validate priceRange is required
-    if (!form.priceRange) {
-      setError(t("priceRangeRequired") || "Price range is required");
-      return;
-    }
+    // Price range is optional
 
     setLoading(true);
 

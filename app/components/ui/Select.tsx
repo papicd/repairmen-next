@@ -52,6 +52,7 @@ export default function Select({
     function handleClickOutside(event: MouseEvent) {
       if (
         containerRef.current &&
+        event.target &&
         !containerRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);

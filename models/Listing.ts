@@ -9,6 +9,7 @@ export interface IListing {
   owner: mongoose.Types.ObjectId;
   place: mongoose.Types.ObjectId;
   serviceType: mongoose.Types.ObjectId;
+  closed: boolean;
   priceRange?: string;
   date?: Date;
   type: ListingType;
@@ -61,6 +62,12 @@ const ListingSchema = new mongoose.Schema<IListing>(
     type: {
       type: String,
       enum: ["offer", "demand"],
+      required: true,
+    },
+
+    closed: {
+      type: Boolean,
+      default: false,
       required: true,
     },
   },

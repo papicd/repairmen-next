@@ -18,6 +18,7 @@ export interface IListing {
   priceRange?: string;
   date?: Date;
   type: ListingType;
+  closed: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -35,6 +36,7 @@ export interface IListingPopulated {
   priceRange?: string;
   date?: Date;
   type: ListingType;
+  closed: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
